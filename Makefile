@@ -1,16 +1,18 @@
 CC = gcc
-CFLAGS = -g -Wall
+CFLAGS = -g -Wall -lrt
 LDFLAGS =
 
 # Source files
-SRCS = NumCores.c
+NUMCORES_SRCS = NumCores.c
+LAB0_SRCS = lab0.c
 
-TARGET = NumCores
+all: NumCores lab0
 
-all: $(TARGET)
+NumCores: $(NUMCORES_SRCS)
+	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $(NUMCORES_SRCS)
 
-$(TARGET): $(SRCS)
-	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $(SRCS)
+lab0: $(LAB0_SRCS)
+	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $(LAB0_SRCS)
 
 clean:
-	rm -f $(TARGET)
+	rm -f NumCores lab0 sequencial_Method2D.txt parallel_Method2D.txt sequencial_Method1D.txt parallel_Method1D.txt

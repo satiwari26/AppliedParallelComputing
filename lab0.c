@@ -187,8 +187,8 @@ void* parallelMatMult1D(void* arg)
    // split multiplication based on the row of 1'st matrix
    for (int row = core * MAX / CORE; row < (core + 1) * MAX / CORE; row++) 
    {
-      for (int col = 0; col < MAX; col++){
-         for(int k = 0; k < MAX; k++)
+      for(int k = 0; k < MAX; k++){
+         for (int col = 0; col < MAX; col++)
          {
             CMat1[row * MAX + col] += AMat1[row * MAX + k] * BMat1[k * MAX + col];
          }

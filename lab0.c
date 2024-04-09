@@ -79,7 +79,7 @@ void fillMatrix() {
 */
 void* addMatricesParallel(void* arg) 
 {
-   int core = (int) arg;
+   int core = (__intptr_t) arg;
 
    for (int i = core * MAX / CORE; i < (core + 1) * MAX / CORE; i++) 
    {
@@ -182,7 +182,7 @@ void sequentialMultOneD(){
 */
 void* parallelMatMult1D(void* arg) 
 {
-   int core = (int) arg;
+   int core = (__intptr_t) arg;
 
    // split multiplication based on the row of 1'st matrix
    for (int row = core * MAX / CORE; row < (core + 1) * MAX / CORE; row++) 
@@ -205,7 +205,7 @@ void* parallelMatMult1D(void* arg)
 */
 void* parallelMatMult(void* arg) 
 {
-   int core = (int) arg;
+   int core = (__intptr_t) arg;
 
    // split multiplication based on the row of 1'st matrix
    for (int i = core * MAX / CORE; i < (core + 1) * MAX / CORE; i++) 
@@ -232,7 +232,7 @@ void* parallelMatMult(void* arg)
 void matMult(){
    clock_gettime(CLOCK_MONOTONIC, &begin);
    for (int i = 0; i < CORE; i++) {
-      pthread_create(&thread[i], NULL, &parallelMatMult, (void*)i);
+      pthread_create(&thread[i], NULL, &parallelMatMult, (void*)(__intptr_t)i);
    }
    for (int i = 0; i < CORE; i++) {
       pthread_join(thread[i], NULL);
@@ -250,7 +250,7 @@ void matMult(){
 void matMult1D(){
    clock_gettime(CLOCK_MONOTONIC, &begin);
    for (int i = 0; i < CORE; i++) {
-      pthread_create(&thread[i], NULL, &parallelMatMult1D, (void*)i);
+      pthread_create(&thread[i], NULL, &parallelMatMult1D, (void*)(__intptr_t)i);
    }
    for (int i = 0; i < CORE; i++) {
       pthread_join(thread[i], NULL);
@@ -315,7 +315,7 @@ void printMat1D(float * Matrix, const char* filename) {
 void matAdd(){
    clock_gettime(CLOCK_MONOTONIC, &begin);
    for (int i = 0; i < CORE; i++) {
-      pthread_create(&thread[i], NULL, &addMatricesParallel, (void*)i);
+      pthread_create(&thread[i], NULL, &addMatricesParallel, (void*)(__intptr_t)i);
    }
    for (int i = 0; i < CORE; i++) {
       pthread_join(thread[i], NULL);

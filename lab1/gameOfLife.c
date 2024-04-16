@@ -4,10 +4,13 @@
 #include <sys/time.h>
 #include <pthread.h>
 
-#define MAX 3
+#define MAX 5
 
 //gameBoard matrix - corresponding value as 0: dead and 1: alive
 int gameBoard[(MAX + 2) * (MAX + 2)];   //2 for ghost rows and ghost cols
+
+//gameBoardNext - to store the next state of the elements
+int gameBoardNext[(MAX + 2) * (MAX + 2)];   //2 for ghost rows and ghost cols
 
 /**
  * @brief

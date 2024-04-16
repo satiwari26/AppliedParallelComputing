@@ -332,37 +332,8 @@ int main() {
    printf("Number of cores running: %d\n",CORE);
 
    fillMatrix();
-   // printf("\nAddition benchmark with 2D array(no index offsetting)\n");
-   //sequential addition
    double avgElapsed = 0;
-   // for(int i=0;i<11;i++){
-   //    addMatricesSequential();
-   //    if(i != 0){
-   //       avgElapsed += elapsed;
-   //    }
-   // }
    double avgVal;
-   // avgVal = avgElapsed/10;   //calc avg of 10 runs
-   // printMat(AMat, "sequencial_Method.txt");
-   // printMat(BMat, "sequencial_Method.txt");
-   // printMat(CMat, "sequencial_Method.txt");
-   // printf("\n Time elapsed in Sequential addition(avg run): %f \n", avgVal);
-
-   // avgElapsed = 0;
-   // //parallel addition
-   // for(int i=0; i<11; i++){
-   //    matAdd();
-   //    if(i != 0){
-   //       avgElapsed += elapsed;
-   //    }
-   // }
-
-   // avgVal = avgElapsed/10; //calc avg of the 10 runs
-
-   // // printMat(AMat, "parallel_Method.txt");
-   // // printMat(BMat, "parallel_Method.txt");
-   // // printMat(CMat, "parallel_Method.txt");
-   // printf("\n Time elapsed in Parallel addition(avg run): %f \n", avgVal);
 
    avgElapsed = 0;
    clearResultMat(); //clear resulting mat
@@ -380,10 +351,6 @@ int main() {
    }
 
    avgVal = avgElapsed/10; //calc avg of the 10 runs
-
-   // printMat(AMat, "sequencial_Method2D.txt");
-   // printMat(BMat, "sequencial_Method2D.txt");
-   // printMat(CMat, "sequencial_Method2D.txt");
    printf("\n Time elapsed in Sequential multiplication 2D (avg run): %f \n", avgVal);
 
    
@@ -399,10 +366,6 @@ int main() {
    }
 
    avgVal = avgElapsed/10; //calc avg of the 10 runs
-
-   // printMat1D(AMat1, "sequencial_Method1D.txt");
-   // printMat1D(BMat1, "sequencial_Method1D.txt");
-   // printMat1D(CMat1, "sequencial_Method1D.txt");
    printf("\n Time elapsed in Sequential multiplication 1D (avg run): %f \n", avgVal);
 
 
@@ -417,9 +380,6 @@ int main() {
    }
 
    avgVal = avgElapsed/10; //calc avg of the 10 runs
-   // printMat(AMat, "parallel_Method2D.txt");
-   // printMat(BMat, "parallel_Method2D.txt");
-   // printMat(CMat, "parallel_Method2D.txt");
    printf("\n Time elapsed in parallel multiplication 2D (avg run): %f \n", avgVal);
 
 
@@ -434,9 +394,6 @@ int main() {
    }
 
    avgVal = avgElapsed/10; //calc avg of the 10 runs
-   // printMat1D(AMat1, "parallel_Method1D.txt");
-   // printMat1D(BMat1, "parallel_Method1D.txt");
-   // printMat1D(CMat1, "parallel_Method1D.txt");
    printf("\n Time elapsed in parallel multiplication 1D (avg run): %f \n", avgVal);
 
    return 0;

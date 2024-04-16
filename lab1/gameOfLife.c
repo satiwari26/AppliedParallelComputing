@@ -4,7 +4,7 @@
 #include <sys/time.h>
 #include <pthread.h>
 
-#define MAX 10
+#define MAX 3
 
 //gameBoard matrix - corresponding value as 0: dead and 1: alive
 int gameBoard[(MAX + 2) * (MAX + 2)];   //2 for ghost rows and ghost cols
@@ -37,6 +37,10 @@ void initializeGame(){
     }
 
     //initializing the corner ghost cell values
+    gameBoard[0] = gameBoard[MAX * (MAX + 2) + (MAX)];   //left top ghost corner
+    gameBoard[((MAX + 2) - 1) * (MAX + 2)] = gameBoard[1 * (MAX + 2) + MAX];    //left bottom ghost corner
+    gameBoard[((MAX + 2) - 1) * (MAX + 2) + ((MAX + 2) - 1)] = gameBoard[1 * (MAX + 2) + 1];    //right bottom ghost corner
+    gameBoard[0 * (MAX + 2) + ((MAX + 2) - 1)] = gameBoard[MAX * (MAX + 2) + 1];    //right top ghost corner
 }
 
 /**

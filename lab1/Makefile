@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -g -Wall -lrt -pthread
+CFLAGS = -g -Wall -lrt -pthread -fopenmp
 LDFLAGS =
 
 # Source files

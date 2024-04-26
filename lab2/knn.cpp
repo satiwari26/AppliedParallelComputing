@@ -4,6 +4,7 @@
 #include <time.h>
 #include <sys/time.h>
 #include <omp.h>
+#include <random>
 
 using namespace std;
 #define ELEMENTS_SIZE 50000000
@@ -86,20 +87,36 @@ int classifyAPoint_parallel(Point arr[], int n, int k, Point p)
 }
 
 void initializeDataPoints_sequential(){
-	srand(time(NULL));
-	for(int i = 0; i < ELEMENTS_SIZE; i++){
-		neighbours[i].x = rand() % 11;
-		neighbours[i].y = rand() % 11;
-		neighbours[i].val = (neighbours[i].x > 5 && neighbours[i].y > 5) ? 1 : 0;
-	}
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    
+    // Create uniform distribution for integers in the range [0, 10]
+    std::uniform_int_distribution<int> distribution(0, 10);
+    
+    // Generate random x and y coordinates for each neighbour
+    for(int i = 0; i < ELEMENTS_SIZE; i++){
+        neighbours[i].x = distribution(gen);
+        neighbours[i].y = distribution(gen);
+        
+        // Determine the value based on x and y coordinates
+        neighbours[i].val = (neighbours[i].x > 5 && neighbours[i].y > 5) ? 1 : 0;
+    }
 }
 
 void initializeDataPoints_parallel(){
-	srand(time(NULL));
+	std::random_device rd;
+	std::mt19937 gen(rd());
+
 	#pragma omp parallel for
-	for(int i = 0; i < ELEMENTS_SIZE; i++){
-		neighbours[i].x = rand() % 11;
-		neighbours[i].y = rand() % 11;
+	for(int i = 0; i < ELEMENTS_SIZE; i++) {
+		// Create uniform distribution for integers in the range [0, 10]
+		std::uniform_int_distribution<int> distribution(0, 10);
+		
+		// Generate random x and y coordinates
+		neighbours[i].x = distribution(gen);
+		neighbours[i].y = distribution(gen);
+
+		// Determine the value based on x and y coordinates
 		neighbours[i].val = (neighbours[i].x > 5 && neighbours[i].y > 5) ? 1 : 0;
 	}
 }

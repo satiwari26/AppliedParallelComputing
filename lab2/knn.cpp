@@ -60,6 +60,7 @@ int classifyAPoint_parallel(Point arr[], int n, int k, Point p)
 {	
 	int freq1 = 0;	 // Frequency of group 0
 	int freq2 = 0;	 // Frequency of group 1
+	omp_set_num_threads(NUM_THREADS);
 	#pragma omp parallel
 	{
 		// Fill distances of all points from p
@@ -106,6 +107,8 @@ void initializeDataPoints_sequential(){
 void initializeDataPoints_parallel(){
 	std::random_device rd;
 	std::mt19937 gen(rd());
+
+	omp_set_num_threads(NUM_THREADS);
 
 	#pragma omp parallel for
 	for(int i = 0; i < ELEMENTS_SIZE; i++) {

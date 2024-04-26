@@ -5,15 +5,19 @@
 #include <sys/time.h>
 #include <omp.h>
 #include <random>
+#include <cstdlib>
 
 using namespace std;
-#define ELEMENTS_SIZE 50000000
-int NUM_THREADS = 8;
+#define ELEMENTS_SIZE 5000000
+int NUM_THREADS = 4;
 
-struct Point
+struct __attribute__((aligned(64))) Point
 {
 	int val;	 // Group of point
-	double x, y;	 // Co-ordinate of point
+	double x;
+	char padding1[48]; 
+	double y;	 // Co-ordinate of point
+	char padding2[48]; 
 	double distance; // Distance from test point
 };
 
@@ -22,9 +26,19 @@ Point * neighbours;
 
 // Used to sort an array of points by increasing
 // order of distance
-bool comparison(Point a, Point b)
+// bool comparison(Point a, Point b)
+// {
+// 	return (a.distance < b.distance);
+// }
+int comparison(const void* a, const void* b, void* user_data)
 {
-	return (a.distance < b.distance);
+    // Cast the parameters to the appropriate types
+    const Point* point_a = static_cast<const Point*>(a);
+    const Point* point_b = static_cast<const Point*>(b);
+    
+    // Your comparison logic here
+    // For example, comparing distance:
+    return (point_a->distance < point_b->distance) ? -1 : (point_a->distance > point_b->distance) ? 1 : 0;
 }
 
 // This function finds classification of point p using
@@ -38,7 +52,8 @@ int classifyAPoint(Point arr[], int n, int k, Point p)
 		arr[i].distance = sqrt((arr[i].x - p.x) * (arr[i].x - p.x) + (arr[i].y - p.y) * (arr[i].y - p.y));
 
 	// Sorting algorithm can't be parallize but use merge sort for best performance O(nlog(n))
-	sort(arr, arr+n, comparison);
+	// sort(arr, arr+n, comparison);
+	qsort_r(arr, n, sizeof(Point), comparison, nullptr);	//thread safe sorting algorithm
 
 	// Now consider the first k elements and only
 	// two groups
@@ -69,8 +84,9 @@ int classifyAPoint_parallel(Point arr[], int n, int k, Point p)
 			arr[i].distance = sqrt((arr[i].x - p.x) * (arr[i].x - p.x) + (arr[i].y - p.y) * (arr[i].y - p.y));
 
 		// Sorting algorithm can't be parallize but use merge sort for best performance O(nlog(n))
-		#pragma omp single
-		sort(arr, arr+n, comparison);
+		// #pragma omp single
+		// sort(arr, arr+n, comparison);
+		qsort_r(arr, n, sizeof(Point), comparison, nullptr);
 
 		// Now consider the first k elements and only
 		// two groups

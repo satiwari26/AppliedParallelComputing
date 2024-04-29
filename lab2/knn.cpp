@@ -9,7 +9,7 @@
 
 using namespace std;
 #define ELEMENTS_SIZE 5000000
-int NUM_THREADS = 4;
+int NUM_THREADS = 2;
 
 struct __attribute__((aligned(64))) Point
 {
@@ -175,7 +175,7 @@ int main()
 	p.y = 5.6;
 
 	// Parameter to decide group of the testing point
-	int k = 10;
+	int k = ELEMENTS_SIZE;
 
 	elapsed = 0;
 	clock_gettime(CLOCK_MONOTONIC, &begin);
